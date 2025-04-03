@@ -71,5 +71,5 @@ Whether you're into game dev, backend systems, AI safety, or teaching beginners 
 
 ## 🙌 Credits
 - Pet pixel art from [credit/link if needed]
-- Built and documented by [Your Name]
+- Built and documented by Jeremiah
 - Powered by late nights, boba, and way too much testing ☕
