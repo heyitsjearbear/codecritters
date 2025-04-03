@@ -70,6 +70,6 @@ Whether you're into game dev, backend systems, AI safety, or teaching beginners 
 ---
 
 ## 🙌 Credits
-- Pet pixel art from [credit/link if needed]
+- Dino pixel art from: https://arks.itch.io/dino-characters
 - Built and documented by Jeremiah
 - Powered by late nights, boba, and way too much testing ☕
