@@ -1,5 +1,5 @@
 import pygame
-from spritesheet import SpriteSheet
+from assets.spritesheet import SpriteSheet
 
 SCREEN_HEIGHT = 480
 SCREEN_WIDTH = 640
