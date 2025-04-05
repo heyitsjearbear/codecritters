@@ -53,7 +53,9 @@ while running:
 
     #show frame image
     screen.blit(animation_list[action][frame], (0,0))
-    # poll for events
+    
+    
+    pygame.draw.rect(screen, BLACK,(0,380 ,640 ,100))
     # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
