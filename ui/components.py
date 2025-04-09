@@ -67,3 +67,49 @@ class StatDisplay:
         # Draw text label
         text = self.font.render(f"{label}: {value}", True, self.text_color)
         surface.blit(text, (x + self.bar_width + 10, y))
+
+class MessageDisplay:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        self.font = None
+        self.text_color = (255, 255, 255)
+        self.bg_color = (0, 0, 0, 128)  # Semi-transparent black
+        self.message = ""
+        self.timer = 0
+        
+    def initialize(self):
+        """Initialize fonts - call this after pygame.init()"""
+        self.font = pygame.font.SysFont('Arial', 24, True)
+    
+    def set_message(self, text, duration=120):
+        """Set a message to display for the specified duration (in frames)"""
+        self.message = text
+        self.timer = duration
+    
+    def update(self):
+        """Update message timer - call this every frame"""
+        if self.timer > 0:
+            self.timer -= 1
+            
+    def draw(self, surface):
+        """Draw message if timer is active"""
+        if self.timer <= 0 or not self.message:
+            return
+            
+        if not self.font:
+            self.initialize()
+        
+        # Create message surface
+        message_surf = self.font.render(self.message, True, self.text_color)
+        message_rect = message_surf.get_rect(center=(self.width//2, self.height - 50))
+        
+        # Draw background
+        bg_rect = message_rect.inflate(20, 10)
+        bg_surf = pygame.Surface(bg_rect.size, pygame.SRCALPHA)
+        bg_surf.fill(self.bg_color)
+        surface.blit(bg_surf, bg_rect.topleft)
+        
+        # Draw message
+        surface.blit(message_surf, message_rect)
+

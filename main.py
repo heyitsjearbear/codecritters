@@ -1,7 +1,7 @@
 import pygame
 from assets.spritesheet import SpriteSheet
 from entities.pet import Pet
-from ui.components import StatDisplay
+from ui.components import StatDisplay, MessageDisplay
 
 # Constants
 SCREEN_WIDTH = 640
@@ -49,6 +49,9 @@ pet = Pet(name="Blue Dino", health=80, hunger=30, energy=70)
 stat_display = StatDisplay(10, 10)
 stat_display.initialize()
 
+# instances for message display
+message_display = MessageDisplay(SCREEN_WIDTH, SCREEN_HEIGHT)
+message_display.initialize()
 running = True
 while running:
     screen.fill(BG)
@@ -89,6 +92,32 @@ while running:
             sprite_pos.x = mouse_x + offset_x
             sprite_pos.y = mouse_y + offset_y
 
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_f:  # F key to feed
+                pet.feed("fruit")
+                message_display.set_message("Feeding fruit", 120)
+                action = 1
+                frame = 0
+            
+            elif event.key == pygame.K_r:  # R key to rest
+                pet.energy += 20  # Increase energy
+                pet.energy = min(pet.energy, 100)  # Cap at 100
+                message_display.set_message("Resting...", 120)
+                action = 0
+                frame = 0
+            
+            elif event.key == pygame.K_p:  # P key to play
+                pet.play("fetch")
+                message_display.set_message("Playing fetch", 120)
+                action = 2
+                frame = 0
+            
+            elif event.key == pygame.K_u:  # U key to update status
+                pet.update_status()
+                message_display.set_message("Updating status", 120)
+
+    message_display.update()
+    message_display.draw(screen)
     pygame.display.update()
     clock.tick(FPS)
 
