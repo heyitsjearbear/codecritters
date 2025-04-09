@@ -1,7 +1,7 @@
 import pygame
 from assets.spritesheet import SpriteSheet
 from entities.pet import Pet
-from ui.components import StatDisplay, MessageDisplay
+from ui.components import StatDisplay, MessageDisplay, ControlsWindow
 
 # Constants
 SCREEN_WIDTH = 640
@@ -52,6 +52,11 @@ stat_display.initialize()
 # instances for message display
 message_display = MessageDisplay(SCREEN_WIDTH, SCREEN_HEIGHT)
 message_display.initialize()
+
+#controls window instance
+controls_window = ControlsWindow(SCREEN_WIDTH, SCREEN_HEIGHT)
+controls_window.initialize()
+
 running = True
 while running:
     screen.fill(BG)
@@ -93,6 +98,10 @@ while running:
             sprite_pos.y = mouse_y + offset_y
 
         elif event.type == pygame.KEYDOWN:
+            #keyboard help shortcut
+            if event.key == pygame.K_h:
+                controls_window.toggle()
+                message_display.set_message("Controls toggeld", 60)
             if event.key == pygame.K_f:  # F key to feed
                 pet.feed("fruit")
                 message_display.set_message("Feeding fruit", 120)
@@ -118,6 +127,7 @@ while running:
 
     message_display.update()
     message_display.draw(screen)
+    controls_window.draw(screen)
     pygame.display.update()
     clock.tick(FPS)
 

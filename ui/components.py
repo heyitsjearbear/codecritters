@@ -113,3 +113,71 @@ class MessageDisplay:
         # Draw message
         surface.blit(message_surf, message_rect)
 
+class ControlsWindow:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        self.is_visible = False
+        self.font = None
+        self.title_font = None
+        self.text_color = (255, 255, 255)
+        self.bg_color = (0, 0, 0, 200)  # Semi-transparent black
+        self.controls = [
+            {"key": "F", "action": "Feed pet"},
+            {"key": "R", "action": "Rest pet"},
+            {"key": "P", "action": "Play with pet"},
+            {"key": "U", "action": "Update pet status"},
+            {"key": "Mouse", "action": "Drag pet"},
+            {"key": "H", "action": "Show/hide controls"}
+        ]
+        
+    def initialize(self):
+        """Initialize fonts - call this after pygame.init()"""
+        self.font = pygame.font.SysFont('Arial', 16)
+        self.title_font = pygame.font.SysFont('Arial', 24, True)
+        
+    def toggle(self):
+        """Toggle visibility of the controls window"""
+        self.is_visible = not self.is_visible
+        
+    def draw(self, surface):
+        """Draw controls window if visible"""
+        if not self.is_visible:
+            return
+            
+        if not self.font:
+            self.initialize()
+            
+        # Calculate dimensions
+        window_width = 300
+        window_height = 50 + (len(self.controls) * 30)
+        x = (self.width - window_width) // 2
+        y = (self.height - window_height) // 2
+        
+        # Draw background
+        bg_surf = pygame.Surface((window_width, window_height), pygame.SRCALPHA)
+        bg_surf.fill(self.bg_color)
+        surface.blit(bg_surf, (x, y))
+        
+        # Draw border
+        pygame.draw.rect(surface, self.text_color, (x, y, window_width, window_height), 2)
+        
+        # Draw title
+        title_surf = self.title_font.render("Game Controls", True, self.text_color)
+        title_rect = title_surf.get_rect(center=(x + window_width//2, y + 25))
+        surface.blit(title_surf, title_rect)
+        
+        # Draw controls list
+        for i, control in enumerate(self.controls):
+            # Key box
+            key_box = pygame.Rect(x + 20, y + 60 + (i * 30), 30, 22)
+            pygame.draw.rect(surface, self.text_color, key_box, 1)
+            
+            # Key text
+            key_surf = self.font.render(control["key"], True, self.text_color)
+            key_rect = key_surf.get_rect(center=key_box.center)
+            surface.blit(key_surf, key_rect)
+            
+            # Action text
+            action_surf = self.font.render(control["action"], True, self.text_color)
+            surface.blit(action_surf, (x + 70, y + 60 + (i * 30)))
