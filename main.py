@@ -1,5 +1,7 @@
 import pygame
 from assets.spritesheet import SpriteSheet
+from entities.pet import Pet
+from ui.components import StatDisplay
 
 # Constants
 SCREEN_WIDTH = 640
@@ -40,6 +42,13 @@ dragging = False
 offset_x = 0
 offset_y = 0
 
+# create a pet instance
+pet = Pet(name="Blue Dino", health=80, hunger=30, energy=70)
+
+# create a stat display
+stat_display = StatDisplay(10, 10)
+stat_display.initialize()
+
 running = True
 while running:
     screen.fill(BG)
@@ -56,6 +65,9 @@ while running:
     current_sprite = animation_list[action][frame]
     sprite_rect = current_sprite.get_rect(topleft=(sprite_pos.x, sprite_pos.y))
     screen.blit(current_sprite, sprite_pos)
+
+    # draw pet stats using StatDisplay Class
+    stat_display.draw(screen, pet)
 
     # Event handling
     for event in pygame.event.get():
